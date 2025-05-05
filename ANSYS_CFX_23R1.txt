@@ -1,0 +1,16 @@
+Beta = 0.012
+Ce1 = 1.44
+Ce2 = 1.92
+Cmu = 0.085
+Eta = sqrt(ProductionTerm/Density/Cmu/Turbulence Eddy Dissipation)
+Eta0 = 4.38
+Kappa = 0.41
+Sigmae = 1.3
+Sigmak = 1
+Fc = ((tanh(max(0,(1/arg1-0.09)*(500))^2)-1)*(-Eta0*Mach Number))
+fn = (Eta*(1-Eta/(Eta0+Fc)))/(1+Beta*Eta^3)
+arg1 = Density*Cmu*(Turbulence Kinetic Energy^2)/Kappa/Dynamic Viscosity/Turbulence Eddy Dissipation
+Production = Eddy Viscosity*((Velocity u.Gradient Y+Velocity v.Gradient X)*(Velocity u.Gradient Y+Velocity v.Gradient X)+(Velocity u.Gradient Z+Velocity w.Gradient X)*(Velocity u.Gradient Z+Velocity w.Gradient X)+(Velocity v.Gradient Z+Velocity w.Gradient Y)*(Velocity v.Gradient Z+Velocity w.Gradient Y)+2*Velocity u.Gradient X*Velocity u.Gradient X+2*Velocity v.Gradient Y*Velocity v.Gradient Y+2*Velocity w.Gradient Z*Velocity w.Gradient Z)
+ProductionComp = 2/3*Velocity u.Gradient X*(Eddy Viscosity*Velocity u.Gradient X+Density*Turbulence Kinetic Energy)+2/3*Velocity v.Gradient Y*(Eddy Viscosity*Velocity v.Gradient Y+Density*Turbulence Kinetic Energy)+2/3*Velocity w.Gradient Z*(Eddy Viscosity*Velocity w.Gradient Z+Density*Turbulence Kinetic Energy)
+ProductionTerm = abs(Production-ProductionComp)
+RNGSource = (-fn*ProductionTerm*Turbulence Eddy Dissipation/Turbulence Kinetic Energy)
